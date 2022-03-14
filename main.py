@@ -33,7 +33,7 @@ def shift_key(results_tab, key):
     return  results_tab
 
 
-def generate_start_value(size, cout_of_var, X_max, X_min):
+def generate_start_value(size, amount_of_var, X_max, X_min):
     results = {}
     results.clear()
     obj = {}
@@ -43,7 +43,7 @@ def generate_start_value(size, cout_of_var, X_max, X_min):
         X = []
         fx = 0
 
-        for j in range(cout_of_var):
+        for j in range(amount_of_var):
             X.append((X_max[j] - X_min[j]) * random.random() + X_min[j])
 
         fx = Fx(X)
@@ -77,13 +77,13 @@ if __name__ == '__main__':
     HMCR = 0.85
     PAR = 0.45
     b = 10
-    cout_of_var = 2
+    amount_of_var = 2
 
     step = 0
     X = []
     X_max = [10, 10] # Kolejno minima i maximna dla X1,X2,...,XN
     X_min = [-10, -10]
 
-    results_table = generate_start_value(HMS, cout_of_var, X_max, X_min)
+    results_table = generate_start_value(HMS, amount_of_var, X_max, X_min)
 
-    show_table(results_table, cout_of_var)
+    show_table(results_table, amount_of_var)

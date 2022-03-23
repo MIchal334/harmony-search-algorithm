@@ -120,8 +120,25 @@ if __name__ == '__main__':
             show_table(results_table, amount_of_var)
 
         elif decision_var <= (threshold2 + threshold1):
-            correction = random_from_range(-b, b)
             print("P2")
+
+            for j in range(amount_of_var):
+                correction = random_from_range(-b, b)
+                row_number = random.randint(0,HMS)
+                temp_value = results_table[row_number].X[j]
+                temp_value = temp_value + correction
+
+                if temp_value < X_min[j]:
+                    temp_value = X_min[j]
+
+                if temp_value > X_max[j]:
+                    temp_value = X_max[j]
+
+                X_var.append(temp_value)
+
+            results_table = add_new_value_to_list(X_var, results_table, HMS)
+            show_table(results_table, amount_of_var)
+
         else:
             print("P3")
             X_var = create_list_of_random_value(X_max, X_min, amount_of_var)

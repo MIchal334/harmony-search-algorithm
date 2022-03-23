@@ -25,10 +25,11 @@ def find_new_key(results_tab, new_fx):
     return amount
 
 
-def shift_key(results_tab, key):
+def shift_key(results_tab, key, size_max):
     for i in range(len(results_tab), key, -1):
-        temp_obj = results_tab[i - 1]
-        results_tab[i] = temp_obj
+        if i < size_max:
+            temp_obj = results_tab[i - 1]
+            results_tab[i] = temp_obj
 
     return results_tab
 
@@ -41,16 +42,16 @@ def generate_start_value(size, amount_of_var, X_max, X_min):
 
     for i in range(size):
         X = create_list_of_random_value(X_max, X_min, amount_of_var)
-        results_tab = add_new_value_to_list(X, results_tab)
+        results_tab = add_new_value_to_list(X, results_tab, size)
     return results_tab
 
 
-def add_new_value_to_list(X, results):
+def add_new_value_to_list(X, results, size):
     fx = Fx(X)
     obj = Result(X, fx)
     key = find_new_key(results, fx)
-    if key < len(results):
-        results = shift_key(results, key)
+    if key < size:
+        results = shift_key(results, key, size)
     results[key] = obj
     return results
 
@@ -81,7 +82,7 @@ def random_from_range(A, B):
 
 
 if __name__ == '__main__':
-    HMS = 3
+    HMS = 5
     HMCR = 0.85
     PAR = 0.45
     b = 1
@@ -111,8 +112,6 @@ if __name__ == '__main__':
             print("P2")
         else:
             print("P3")
-            X_var = create_list_of_random_value(X_max,X_min,amount_of_var)
-            results_table = add_new_value_to_list(X_var, results_table)
+            X_var = create_list_of_random_value(X_max, X_min, amount_of_var)
+            results_table = add_new_value_to_list(X_var, results_table, HMS)
             show_table(results_table, amount_of_var)
-
-

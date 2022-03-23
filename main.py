@@ -11,9 +11,10 @@ class Result:
 
 
 def Fx(X):
-    return 4 * X[0] - 2.1 * math.pow(X[1], 4.0) + (1 / 3) * math.pow(X[0], 6.0) + X[0] * X[1] - 4 * math.pow(X[1],
-                                                                                                             2.0) + 4 * math.pow(
-        X[1], 4.0)
+    # return 4 * X[0] - 2.1 * math.pow(X[1], 4.0) + (1 / 3) * math.pow(X[0], 6.0) + X[0] * X[1] - 4 * math.pow(X[1],2.0) + 4 * math.pow(X[1], 4.0)
+    num1 = pow(X[0], 2.0) + X[1] - 11
+    num2 = X[0] + pow(X[1], 2.0) - 7
+    return pow(num1, 2.0) + pow(num2, 2.0)
 
 
 def find_new_key(results_tab, new_fx):
@@ -52,7 +53,7 @@ def add_new_value_to_list(X, results, size):
     key = find_new_key(results, fx)
     if key < size:
         results = shift_key(results, key, size)
-    results[key] = obj
+        results[key] = obj
     return results
 
 
@@ -65,7 +66,6 @@ def create_list_of_random_value(X_max, X_min, amount_of_var):
 
 
 def show_table(results_table, cout_value):
-
     for i in range(len(results_table)):
         info = ""
         info = info + "Nr " + str(i)
@@ -83,16 +83,16 @@ def random_from_range(A, B):
 
 
 def get_x_list(results_table, j):
-    return  None
+    return None
 
 
 if __name__ == '__main__':
-    HMS = 3
-    HMCR = 0.85
-    PAR = 0.45
-    b = 1
+    HMS = 10
+    HMCR = 0.8
+    PAR = 0.3
+    b = 2
     amount_of_var = 2
-    amount_of_step = 10
+    amount_of_step = 100000
 
     step = 0
     X = []
@@ -106,25 +106,23 @@ if __name__ == '__main__':
     threshold3 = 1 - HMCR
 
     show_table(results_table, amount_of_var)
-    for i in range(4):
+
+    for i in range(amount_of_step):
         X_var = []
         x_list = []
         decision_var = random.random()
 
         if decision_var <= threshold1:
-            print("P1")
             for j in range(amount_of_var):
-                row_number = random.randint(0,HMS)
+                row_number = random.randint(0, HMS - 1)
                 X_var.append(results_table[row_number].X[j])
             results_table = add_new_value_to_list(X_var, results_table, HMS)
-            show_table(results_table, amount_of_var)
+            # show_table(results_table, amount_of_var)
 
         elif decision_var <= (threshold2 + threshold1):
-            print("P2")
-
             for j in range(amount_of_var):
                 correction = random_from_range(-b, b)
-                row_number = random.randint(0,HMS)
+                row_number = random.randint(0, HMS - 1)
                 temp_value = results_table[row_number].X[j]
                 temp_value = temp_value + correction
 
@@ -137,10 +135,16 @@ if __name__ == '__main__':
                 X_var.append(temp_value)
 
             results_table = add_new_value_to_list(X_var, results_table, HMS)
-            show_table(results_table, amount_of_var)
+            # show_table(results_table, amount_of_var)
 
         else:
-            print("P3")
             X_var = create_list_of_random_value(X_max, X_min, amount_of_var)
             results_table = add_new_value_to_list(X_var, results_table, HMS)
-            show_table(results_table, amount_of_var)
+            # show_table(results_table, amount_of_var)
+
+    for i in range(4):
+        print()
+
+    print("Wynik calosci")
+    print()
+    show_table(results_table, amount_of_var)

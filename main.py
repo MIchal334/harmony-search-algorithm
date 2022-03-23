@@ -65,6 +65,7 @@ def create_list_of_random_value(X_max, X_min, amount_of_var):
 
 
 def show_table(results_table, cout_value):
+
     for i in range(len(results_table)):
         info = ""
         info = info + "Nr " + str(i)
@@ -81,8 +82,12 @@ def random_from_range(A, B):
     return (B - A) * random.random() + A
 
 
+def get_x_list(results_table, j):
+    return  None
+
+
 if __name__ == '__main__':
-    HMS = 5
+    HMS = 3
     HMCR = 0.85
     PAR = 0.45
     b = 1
@@ -103,10 +108,17 @@ if __name__ == '__main__':
     show_table(results_table, amount_of_var)
     for i in range(4):
         X_var = []
+        x_list = []
         decision_var = random.random()
 
         if decision_var <= threshold1:
             print("P1")
+            for j in range(amount_of_var):
+                row_number = random.randint(0,HMS)
+                X_var.append(results_table[row_number].X[j])
+            results_table = add_new_value_to_list(X_var, results_table, HMS)
+            show_table(results_table, amount_of_var)
+
         elif decision_var <= (threshold2 + threshold1):
             correction = random_from_range(-b, b)
             print("P2")

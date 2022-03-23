@@ -92,12 +92,12 @@ if __name__ == '__main__':
     PAR = 0.3
     b = 2
     amount_of_var = 2
-    amount_of_step = 100000
+    amount_of_step = 300000
 
     step = 0
     X = []
-    X_max = [10, 10]  # Kolejno minima i maximna dla X1,X2,...,XN
-    X_min = [-10, -10]
+    X_max = [6, 6]  # Kolejno minima i maximna dla X1,X2,...,XN
+    X_min = [-6, -6]
 
     results_table = generate_start_value(HMS, amount_of_var, X_max, X_min)
 

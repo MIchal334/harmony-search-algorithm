@@ -1,6 +1,7 @@
 import math
 from tkinter import *
 from main import main_start
+from tkinter import messagebox
 
 root = Tk()
 root.title("HS-Program")
@@ -10,7 +11,16 @@ def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HM
     fun = analize(function_filed)
     minimum_tab = extremum_analize(x_min_filed + "\n")
     maximum_tab = extremum_analize(x_max_filed + "\n")
-    main_start(HMS, HMCR, PAR, B, amount_var, iterrations, maximum_tab, minimum_tab, fun)
+    isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B)
+
+    if isOK:
+        main_start(HMS, HMCR, PAR, B, amount_var, iterrations, maximum_tab, minimum_tab, fun)
+
+
+def check_data(amount_var, HMCR, HMS, PAR, iterrations, B):
+    if int(amount_var) <= 0 or int(HMCR) < 0 or int(HMS) <= 0 or int(PAR) < 0 or int(iterrations) <= 0 or int(B) < 0:
+            messagebox.showwarning("Błąd wejciowy","Paremetry wejciowe powinny być większe od 0")
+            return False
 
 
 def analize(fun):

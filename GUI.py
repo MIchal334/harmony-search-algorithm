@@ -10,7 +10,7 @@ def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HM
     fun = analize(function_filed)
     minimum_tab = extremum_analize(x_min_filed + "\n")
     maximum_tab = extremum_analize(x_max_filed + "\n")
-    main_start(HMS,HMCR,PAR,B,amount_var,iterrations,maximum_tab,minimum_tab,fun)
+    main_start(HMS, HMCR, PAR, B, amount_var, iterrations, maximum_tab, minimum_tab, fun)
 
 
 def analize(fun):
@@ -27,6 +27,14 @@ def analize(fun):
 
 def clear():
     fun_filed.delete(0, END)
+    X_min_filed.delete(0, END)
+    X_max_filed.delete(0, END)
+    amount_var_filed.delete(0, END)
+    HMS_filed.delete(0, END)
+    HMCR_filed.delete(0, END)
+    PAR_filed.delete(0, END)
+    iterrations_filed.delete(0, END)
+    B_filed.delete(0, END)
 
 
 def extremum_analize(extrema_str):
@@ -35,25 +43,21 @@ def extremum_analize(extrema_str):
     number = ""
 
     for c in extrema_str:
-
         if c == ";" or c == "\n":
             X.append(int(number))
             number = ""
         else:
             number = number + c
-
     return X
 
 
 def add_math_world(str, indexes):
-    print(str)
     for i in indexes:
         str1 = str[0:i]
         print(str1)
         str2 = "math." + str[i:]
         print(str2)
         str = str1 + str2
-    print(str)
     return str
 
 

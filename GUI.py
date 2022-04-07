@@ -1,15 +1,16 @@
 import math
 from tkinter import *
+from main import main_start
 
 root = Tk()
 root.title("HS-Program")
 
 
-def start_program(function_filed, x_min_filed, x_max_filed, amount_var):
-    analize(function_filed)
+def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B):
+    fun = analize(function_filed)
     minimum_tab = extremum_analize(x_min_filed + "\n")
     maximum_tab = extremum_analize(x_max_filed + "\n")
-    return
+    main_start(HMS,HMCR,PAR,B,amount_var,iterrations,maximum_tab,minimum_tab,fun)
 
 
 def analize(fun):
@@ -21,8 +22,7 @@ def analize(fun):
         if x in fun:
             index.append(fun.find(x))
     fun = add_math_world(fun, index)
-    Fx([math.pi / 2, 2], fun)
-    return
+    return fun
 
 
 def clear():
@@ -43,13 +43,6 @@ def extremum_analize(extrema_str):
             number = number + c
 
     return X
-
-
-def Fx(X, function):
-    x = X[0]
-    y = X[1]
-    sum = eval(function)
-    print(sum)
 
 
 def add_math_world(str, indexes):
@@ -77,10 +70,12 @@ HMCR_filed = Entry(frame_data, width=10)
 HMS_filed = Entry(frame_data, width=10)
 PAR_filed = Entry(frame_data, width=10)
 iterrations_filed = Entry(frame_data, width=10)
+B_filed = Entry(frame_data, width=10)
 
 start_button = Button(frame_controler, text="Start", padx=5, pady=5,
                       command=lambda: start_program(fun_filed.get(), X_min_filed.get(), X_max_filed.get(),
-                                                    amount_var_filed.get()))
+                                                    amount_var_filed.get(), HMCR_filed.get(), HMS_filed.get(),
+                                                    PAR_filed.get(), iterrations_filed.get(), B_filed.get()))
 
 clear_button = Button(frame_controler, text="Clear", padx=5, pady=5, command=clear)
 fx_text = Label(frame_input, text="F(X) = ")
@@ -91,6 +86,7 @@ HMS_text = Label(frame_data, text="HMS=")
 HMCR_text = Label(frame_data, text="HMCR=")
 PAR_text = Label(frame_data, text="PAR=")
 iter_text = Label(frame_data, text="Iterations=")
+B_text = Label(frame_data, text="B=")
 
 frame_input.grid(column=0, row=0)
 frame_data.grid(column=1, row=0)
@@ -115,6 +111,8 @@ PAR_text.grid(row=3, column=0)
 PAR_filed.grid(row=3, column=1)
 iter_text.grid(row=4, column=0)
 iterrations_filed.grid(row=4, column=1)
+B_text.grid(row=5, column=0)
+B_filed.grid(row=5, column=1)
 
 start_button.grid(row=0, column=0)
 clear_button.grid(row=0, column=1)

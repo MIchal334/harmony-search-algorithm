@@ -8,14 +8,16 @@ root.title("HS-Program")
 
 
 def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B):
-    fun = analize(function_filed)
-    minimum_tab = extremum_analize(x_min_filed + "\n")
-    maximum_tab = extremum_analize(x_max_filed + "\n")
-
-    isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B, minimum_tab, maximum_tab)
-    if isOK:
-        main_start(int(HMS), float(HMCR), float(PAR), float(B), int(amount_var), int(iterrations), maximum_tab,
-                   minimum_tab, fun)
+    try:
+        fun = analize(function_filed)
+        minimum_tab = extremum_analize(x_min_filed + "\n")
+        maximum_tab = extremum_analize(x_max_filed + "\n")
+        isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B, minimum_tab, maximum_tab)
+        if isOK:
+            main_start(int(HMS), float(HMCR), float(PAR), float(B), int(amount_var), int(iterrations), maximum_tab,
+                       minimum_tab, fun)
+    except:
+        messagebox.showwarning("Błąd", "Wystąpił nieoczekiwany błąd. Proszę sprawdź wszystkie dane")
 
 
 def check_data(amount_var, HMCR, HMS, PAR, iterrations, B, min_tab, max_tab):

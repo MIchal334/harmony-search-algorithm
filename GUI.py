@@ -11,16 +11,73 @@ def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HM
     fun = analize(function_filed)
     minimum_tab = extremum_analize(x_min_filed + "\n")
     maximum_tab = extremum_analize(x_max_filed + "\n")
-    isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B)
 
+    isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B, minimum_tab, maximum_tab)
     if isOK:
-        main_start(HMS, HMCR, PAR, B, amount_var, iterrations, maximum_tab, minimum_tab, fun)
+        main_start(int(HMS), float(HMCR), float(PAR), float(B), int(amount_var), int(iterrations), maximum_tab,
+                   minimum_tab, fun)
 
 
-def check_data(amount_var, HMCR, HMS, PAR, iterrations, B):
-    if int(amount_var) <= 0 or int(HMCR) < 0 or int(HMS) <= 0 or int(PAR) < 0 or int(iterrations) <= 0 or int(B) < 0:
-            messagebox.showwarning("Błąd wejciowy","Paremetry wejciowe powinny być większe od 0")
-            return False
+def check_data(amount_var, HMCR, HMS, PAR, iterrations, B, min_tab, max_tab):
+    if int(amount_var) <= 0 or float(HMCR) < 0 or int(HMS) <= 0 or float(PAR) < 0 or int(iterrations) <= 0 or float(
+            B) < 0:
+        messagebox.showwarning("Błąd wejciowy", "Paremetry wejciowe powinny być większe od 0")
+        return False
+    if float(HMCR) > 1 or float(PAR) > 1:
+        messagebox.showwarning("Błąd", "Prawdopodństwo HMCR oraz PAR powinno być miejsze niż 1")
+        return False
+
+    if int(amount_var) > 5:
+        messagebox.showwarning("Błąd", "Maxmalna liczba zmiennych to 5")
+        return False
+
+    if len(min_tab) != int(amount_var):
+        messagebox.showwarning("Błąd", "Błądy wymiar tablicy minimów")
+        return False
+
+    if len(max_tab) != int(amount_var):
+        messagebox.showwarning("Błąd", "Błądy wymiar tablicy maximow")
+        return False
+
+    if len(min_tab) != len(max_tab):
+        messagebox.showwarning("Błąd", "Różne wymiary tablicy minimów i maximów")
+        return False
+
+    if check_max_and_min(min_tab, max_tab):
+        messagebox.showwarning("Błąd", "Jedno z maxmimów jest mniejsze lub równe minimum")
+        return False
+
+    if check_B(min_tab, max_tab, B):
+        messagebox.showwarning("Błąd", "Parametr B jest za duży względem minimów i maximów")
+        return False
+
+    return True
+
+
+def check_max_and_min(min_tab, max_tab):
+    for i in range(len(min_tab)):
+        temp_min = min_tab[i]
+        temp_max = max_tab[i]
+        if temp_max <= temp_min:
+            return True
+
+    return False
+
+
+def check_B(min_tab, max_tab, B):
+    diffrence_tab = []
+
+    for i in range(len(min_tab)):
+        temp_min = min_tab[i]
+        temp_max = max_tab[i]
+        diffrence_tab.append(abs(temp_max - temp_min))
+
+    min_dif = min(diffrence_tab)
+
+    if float(B) > min_dif / 2:
+        return True
+
+    return False
 
 
 def analize(fun):

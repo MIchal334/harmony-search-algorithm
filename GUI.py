@@ -8,7 +8,7 @@ root.title("HS-Program")
 
 
 def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B):
-    try:
+    # try:
         fun = analize(function_filed)
         minimum_tab = extremum_analize(x_min_filed + "\n")
         maximum_tab = extremum_analize(x_max_filed + "\n")
@@ -16,8 +16,8 @@ def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HM
         if isOK:
             main_start(int(HMS), float(HMCR), float(PAR), float(B), int(amount_var), int(iterrations), maximum_tab,
                        minimum_tab, fun)
-    except:
-        messagebox.showwarning("Błąd", "Wystąpił nieoczekiwany błąd. Proszę sprawdź wszystkie dane")
+    # except:
+    #     messagebox.showwarning("Błąd", "Wystąpił nieoczekiwany błąd. Proszę sprawdź wszystkie dane")
 
 
 def check_data(amount_var, HMCR, HMS, PAR, iterrations, B, min_tab, max_tab):
@@ -167,25 +167,39 @@ frame_controler.grid(column=0, row=1, columnspan=2)
 # Place of components
 fx_text.grid(row=0, column=0)
 fun_filed.grid(row=0, column=1, columnspan=4, padx=10, pady=10)
+fun_filed.insert(0, "x1+x2")
 
 xmin_text.grid(row=1, column=0)
 X_min_filed.grid(row=1, column=1, columnspan=4, padx=10, pady=10)
+X_min_filed.insert(0, "-5;-5")
 
 xmax_text.grid(row=2, column=0)
 X_max_filed.grid(row=2, column=1, columnspan=4, padx=10, pady=10)
+X_max_filed.insert(0, "5;5")
 
 amount_var_text.grid(row=0, column=0)
 amount_var_filed.grid(row=0, column=1)
+amount_var_filed.insert(0, "2")
+
 HMS_text.grid(row=1, column=0)
 HMS_filed.grid(row=1, column=1)
+HMS_filed.insert(0, "10")
+
 HMCR_text.grid(row=2, column=0)
 HMCR_filed.grid(row=2, column=1)
+HMCR_filed.insert(0, "0.8")
+
 PAR_text.grid(row=3, column=0)
 PAR_filed.grid(row=3, column=1)
+PAR_filed.insert(0, "0.4")
+
 iter_text.grid(row=4, column=0)
 iterrations_filed.grid(row=4, column=1)
+iterrations_filed.insert(0, "1000")
+
 B_text.grid(row=5, column=0)
 B_filed.grid(row=5, column=1)
+B_filed.insert(0, "1")
 
 start_button.grid(row=0, column=0)
 clear_button.grid(row=0, column=1)

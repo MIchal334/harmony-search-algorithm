@@ -1,6 +1,7 @@
-import math
-from random import seed
 import random
+import matplotlib.pyplot as plt
+import numpy as np
+import __future__
 
 
 class Result:
@@ -11,10 +12,11 @@ class Result:
 
 
 def Fx(X, function):
-    x = X[0]
-    y = X[1]
+    for i in range(len(X)):
+        temp_str = "x" + str(i + 1)
+        exec("%s = %f" % (temp_str, X[i]))
     sum = eval(function)
-    return sum
+    return round(sum, 4)
 
 
 # def Fx(X):
@@ -67,7 +69,7 @@ def add_new_value_to_list(X, results, size, fun):
 def create_list_of_random_value(X_max, X_min, amount_of_var):
     X = []
     for j in range(amount_of_var):
-        X.append(random_from_range(X_min[j], X_max[j]))
+        X.append(round(random_from_range(X_min[j], X_max[j]), 4))
     return X
 
 
@@ -88,8 +90,23 @@ def random_from_range(A, B):
     return (B - A) * random.random() + A
 
 
-def get_x_list(results_table, j):
-    return None
+def draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y):
+    print(the_best_point_x)
+
+    if len(X_var) == 2:
+        X_l = np.arange(X_min[0], X_max[0], 0.1)
+        Y_l = np.arange(X_min[1], X_max[1], 0.1)
+        x1, x2 = np.meshgrid(X_l, Y_l)
+        Z = eval(fun)
+        plt.scatter(the_best_point_x, the_best_point_y, c="r")
+
+        for i in range(len(the_best_point_x)):
+            plt.annotate("Iter "+str((i+1)*10)+"%", (the_best_point_x[i], the_best_point_y[i]), c="red")
+
+        plt.imshow(Z, extent=[X_min[0] - 1, X_max[0] + 1, X_min[1] - 1, X_max[1] + 1])
+        plt.imshow(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1, max(the_best_point_y) + 1])
+        plt.colorbar()
+        plt.show()
 
 
 def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, fun):
@@ -98,9 +115,14 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
     threshold1 = HMCR * (1 - PAR)
     threshold2 = HMCR * PAR
     threshold3 = 1 - HMCR
+    results = []
+    the_best_point_x = []
+    the_best_point_y = []
+    graph_step = amount_of_step / 10
 
     show_table(results_table, amount_of_var)
 
+    iterrator = 0
     for i in range(amount_of_step):
         X_var = []
         x_list = []
@@ -118,7 +140,7 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
                 correction = random_from_range(-b, b)
                 row_number = random.randint(0, HMS - 1)
                 temp_value = results_table[row_number].X[j]
-                temp_value = temp_value + correction
+                temp_value = round(temp_value + correction, 4)
 
                 if temp_value < X_min[j]:
                     temp_value = X_min[j]
@@ -129,16 +151,34 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
                 X_var.append(temp_value)
 
             results_table = add_new_value_to_list(X_var, results_table, HMS, fun)
-            # show_table(results_table, amount_of_var)
 
         else:
             X_var = create_list_of_random_value(X_max, X_min, amount_of_var)
             results_table = add_new_value_to_list(X_var, results_table, HMS, fun)
-            # show_table(results_table, amount_of_var)
+
+        if iterrator == graph_step:
+            results.append(results_table.copy())
+            if amount_of_var == 2:
+                the_best_point_x.append(results_table[0].X[0])
+                the_best_point_y.append(results_table[0].X[1])
+            iterrator = 1
+        else:
+            iterrator = iterrator + 1
+
+    results.append(results_table.copy())
+    if amount_of_var == 2:
+        the_best_point_x.append(results_table[0].X[0])
+        the_best_point_y.append(results_table[0].X[1])
+        draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y)
 
     for i in range(4):
         print()
 
     print("Wynik calosci")
-    print()
-    show_table(results_table, amount_of_var)
+    iter = 0
+    for r in results:
+        print()
+        print("Dla ", (iter + 1) * graph_step)
+        # print(r)
+        show_table(r, amount_of_var)
+        iter = iter + 1

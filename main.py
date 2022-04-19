@@ -133,7 +133,6 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
                 row_number = random.randint(0, HMS - 1)
                 X_var.append(results_table[row_number].X[j])
             results_table = add_new_value_to_list(X_var, results_table, HMS, fun)
-            # show_table(results_table, amount_of_var)
 
         elif decision_var <= (threshold2 + threshold1):
             for j in range(amount_of_var):
@@ -171,14 +170,16 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
         the_best_point_y.append(results_table[0].X[1])
         draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y)
 
-    for i in range(4):
-        print()
 
-    print("Wynik calosci")
-    iter = 0
-    for r in results:
-        print()
-        print("Dla ", (iter + 1) * graph_step)
-        # print(r)
-        show_table(r, amount_of_var)
-        iter = iter + 1
+    return results
+    # for i in range(4):
+    #     print()
+    #
+    # print("Wynik calosci")
+    # iter = 0
+    # for r in results:
+    #     print()
+    #     print("Dla ", (iter + 1) * graph_step)
+    #     # print(r)
+    #     show_table(r, amount_of_var)
+    #     iter = iter + 1

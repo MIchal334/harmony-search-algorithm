@@ -19,13 +19,6 @@ def Fx(X, function):
     return round(sum, 4)
 
 
-# def Fx(X):
-#     # return 4 * X[0] - 2.1 * math.pow(X[1], 4.0) + (1 / 3) * math.pow(X[0], 6.0) + X[0] * X[1] - 4 * math.pow(X[1],2.0) + 4 * math.pow(X[1], 4.0)
-#     # num1 = pow(X[0], 2.0) + X[1] - 11
-#     # num2 = X[0] + pow(X[1], 2.0) - 7
-#     return pow(num1, 2.0) + pow(num2, 2.0)
-
-
 def find_new_key(results_tab, new_fx):
     amount = 0
     for i in range(len(results_tab)):

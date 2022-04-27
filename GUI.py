@@ -1,14 +1,15 @@
 import math
 from tkinter import *
+
+import GUI2
 from main import main_start
 from tkinter import messagebox
-from GUI2 import start_calculations
-
-root = Tk()
-root.title("HS-Program")
+# from GUI2 import start_calculations
 
 
-def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B):
+
+
+def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B,root):
     # try:
     fun = analize(function_filed)
     minimum_tab = extremum_analize(x_min_filed + "\n")
@@ -20,7 +21,9 @@ def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HM
                              minimum_tab,
                              fun)
         root.destroy()
-        start_calculations(results, int(amount_var))
+        GUI2.start_calculations(results, int(amount_var), int(iterrations), function_filed, x_min_filed, x_max_filed, HMS,
+                           HMCR,
+                           PAR, B, int(100))
 
 
 # except:
@@ -139,76 +142,94 @@ def add_math_world(str, indexes):
 
 # Init Button and filed
 
-frame_input = LabelFrame(root, text="dane wejsciowe", padx=15, pady=15)
-frame_data = LabelFrame(root, text="parametry wejśsciowe", padx=15, pady=15)
-frame_controler = LabelFrame(root, padx=5, pady=5)
-fun_filed = Entry(frame_input, width=50)
-X_min_filed = Entry(frame_input, width=50)
-X_max_filed = Entry(frame_input, width=50)
-amount_var_filed = Entry(frame_data, width=10)
-HMCR_filed = Entry(frame_data, width=10)
-HMS_filed = Entry(frame_data, width=10)
-PAR_filed = Entry(frame_data, width=10)
-iterrations_filed = Entry(frame_data, width=10)
-B_filed = Entry(frame_data, width=10)
 
-start_button = Button(frame_controler, text="Start", padx=5, pady=5,
-                      command=lambda: start_program(fun_filed.get(), X_min_filed.get(), X_max_filed.get(),
-                                                    amount_var_filed.get(), HMCR_filed.get(), HMS_filed.get(),
-                                                    PAR_filed.get(), iterrations_filed.get(), B_filed.get()))
+def main(fun_f, x_min_f, x_max_f, amount_f, hms_f, hmcr_f, par_f, iter_f, b_f):
+    root = Tk()
+    root.title("HS-Program")
 
-clear_button = Button(frame_controler, text="Clear", padx=5, pady=5, command=clear)
-fx_text = Label(frame_input, text="F(X) = ")
-xmin_text = Label(frame_input, text="Xmin =")
-xmax_text = Label(frame_input, text="Xmax =")
-amount_var_text = Label(frame_data, text="Amount of\n Variable = ")
-HMS_text = Label(frame_data, text="HMS=")
-HMCR_text = Label(frame_data, text="HMCR=")
-PAR_text = Label(frame_data, text="PAR=")
-iter_text = Label(frame_data, text="Iterations=")
-B_text = Label(frame_data, text="B=")
+    frame_input = LabelFrame(root, text="dane wejsciowe", padx=15, pady=15)
+    frame_data = LabelFrame(root, text="parametry wejśsciowe", padx=15, pady=15)
+    frame_controler = LabelFrame(root, padx=5, pady=5)
+    fun_filed = Entry(frame_input, width=50)
+    X_min_filed = Entry(frame_input, width=50)
+    X_max_filed = Entry(frame_input, width=50)
+    amount_var_filed = Entry(frame_data, width=10)
+    HMCR_filed = Entry(frame_data, width=10)
+    HMS_filed = Entry(frame_data, width=10)
+    PAR_filed = Entry(frame_data, width=10)
+    iterrations_filed = Entry(frame_data, width=10)
+    B_filed = Entry(frame_data, width=10)
 
-frame_input.grid(column=0, row=0)
-frame_data.grid(column=1, row=0)
-frame_controler.grid(column=0, row=1, columnspan=2)
-# Place of components
-fx_text.grid(row=0, column=0)
-fun_filed.grid(row=0, column=1, columnspan=4, padx=10, pady=10)
-fun_filed.insert(0, "x1+x2")
+    start_button = Button(frame_controler, text="Start", padx=5, pady=5,
+                          command=lambda: start_program(fun_filed.get(), X_min_filed.get(), X_max_filed.get(),
+                                                        amount_var_filed.get(), HMCR_filed.get(), HMS_filed.get(),
+                                                        PAR_filed.get(), iterrations_filed.get(), B_filed.get(),root))
 
-xmin_text.grid(row=1, column=0)
-X_min_filed.grid(row=1, column=1, columnspan=4, padx=10, pady=10)
-X_min_filed.insert(0, "-5;-5")
+    clear_button = Button(frame_controler, text="Clear", padx=5, pady=5, command=clear)
+    fx_text = Label(frame_input, text="F(X) = ")
+    xmin_text = Label(frame_input, text="Xmin =")
+    xmax_text = Label(frame_input, text="Xmax =")
+    amount_var_text = Label(frame_data, text="Amount of\n Variable = ")
+    HMS_text = Label(frame_data, text="HMS=")
+    HMCR_text = Label(frame_data, text="HMCR=")
+    PAR_text = Label(frame_data, text="PAR=")
+    iter_text = Label(frame_data, text="Iterations=")
+    B_text = Label(frame_data, text="B=")
 
-xmax_text.grid(row=2, column=0)
-X_max_filed.grid(row=2, column=1, columnspan=4, padx=10, pady=10)
-X_max_filed.insert(0, "5;5")
+    frame_input.grid(column=0, row=0)
+    frame_data.grid(column=1, row=0)
+    frame_controler.grid(column=0, row=1, columnspan=2)
+    # Place of components
+    fx_text.grid(row=0, column=0)
+    fun_filed.grid(row=0, column=1, columnspan=4, padx=10, pady=10)
+    fun_filed.insert(0, fun_f)
 
-amount_var_text.grid(row=0, column=0)
-amount_var_filed.grid(row=0, column=1)
-amount_var_filed.insert(0, "2")
+    xmin_text.grid(row=1, column=0)
+    X_min_filed.grid(row=1, column=1, columnspan=4, padx=10, pady=10)
+    X_min_filed.insert(0, x_min_f)
 
-HMS_text.grid(row=1, column=0)
-HMS_filed.grid(row=1, column=1)
-HMS_filed.insert(0, "10")
+    xmax_text.grid(row=2, column=0)
+    X_max_filed.grid(row=2, column=1, columnspan=4, padx=10, pady=10)
+    X_max_filed.insert(0, x_max_f)
 
-HMCR_text.grid(row=2, column=0)
-HMCR_filed.grid(row=2, column=1)
-HMCR_filed.insert(0, "0.8")
+    amount_var_text.grid(row=0, column=0)
+    amount_var_filed.grid(row=0, column=1)
+    amount_var_filed.insert(0, amount_f)
 
-PAR_text.grid(row=3, column=0)
-PAR_filed.grid(row=3, column=1)
-PAR_filed.insert(0, "0.4")
+    HMS_text.grid(row=1, column=0)
+    HMS_filed.grid(row=1, column=1)
+    HMS_filed.insert(0, hms_f)
 
-iter_text.grid(row=4, column=0)
-iterrations_filed.grid(row=4, column=1)
-iterrations_filed.insert(0, "1000")
+    HMCR_text.grid(row=2, column=0)
+    HMCR_filed.grid(row=2, column=1)
+    HMCR_filed.insert(0, hmcr_f)
 
-B_text.grid(row=5, column=0)
-B_filed.grid(row=5, column=1)
-B_filed.insert(0, "1")
+    PAR_text.grid(row=3, column=0)
+    PAR_filed.grid(row=3, column=1)
+    PAR_filed.insert(0, par_f)
 
-start_button.grid(row=0, column=0)
-clear_button.grid(row=0, column=1)
+    iter_text.grid(row=4, column=0)
+    iterrations_filed.grid(row=4, column=1)
+    iterrations_filed.insert(0, iter_f)
 
-root.mainloop()
+    B_text.grid(row=5, column=0)
+    B_filed.grid(row=5, column=1)
+    B_filed.insert(0, b_f)
+
+    start_button.grid(row=0, column=0)
+    clear_button.grid(row=0, column=1)
+
+    root.mainloop()
+
+
+if __name__ == '__main__':
+    fun_f = "x1+x2"
+    x_min_f = "-5;-5"
+    x_max_f = "5;5"
+    amount_f = "2"
+    hms_f = "10"
+    hmcr_f = "0.8"
+    par_f = "0.3"
+    iter_f = "1000"
+    b_f = "1"
+    main(fun_f, x_min_f, x_max_f, amount_f, hms_f, hmcr_f, par_f, iter_f, b_f)

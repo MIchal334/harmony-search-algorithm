@@ -1,7 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import numpy as np
-import __future__
+import math
 
 
 class Result:
@@ -12,9 +12,11 @@ class Result:
 
 
 def Fx(X, function):
+
     for i in range(len(X)):
         temp_str = "x" + str(i + 1)
         exec("%s = %f" % (temp_str, X[i]))
+
     sum = eval(function)
     return round(sum, 4)
 
@@ -91,15 +93,24 @@ def draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y):
         Y_l = np.arange(X_min[1], X_max[1], 0.1)
         x1, x2 = np.meshgrid(X_l, Y_l)
         Z = eval(fun)
-        plt.scatter(the_best_point_x, the_best_point_y, c="r")
 
-        for i in range(len(the_best_point_x)):
-            plt.annotate("Iter "+str((i+1)*10)+"%", (the_best_point_x[i], the_best_point_y[i]), c="red")
+        # for i in range(len(the_best_point_x)):
+        #     plt.annotate("Iter "+str((i+1)*10)+"%", (the_best_point_x[i], the_best_point_y[i]), c="red")
 
-        plt.imshow(Z, extent=[X_min[0] - 1, X_max[0] + 1, X_min[1] - 1, X_max[1] + 1])
-        plt.imshow(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1, max(the_best_point_y) + 1])
-        plt.colorbar()
-        plt.show()
+        for i in range(len(the_best_point_x) - 1):
+            xi = the_best_point_x[i]
+            yi = the_best_point_y[i]
+            xii = the_best_point_x[i + 1]
+            yii = the_best_point_y[i + 1]
+            dx = xii - xi
+            dy = yii - yi
+            plt.arrow(x=xi, y=yi,
+                      dx=dx, dy=dy, width=.02)
+
+    plt.imshow(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1,
+                          max(the_best_point_y) + 1])
+    plt.colorbar()
+    plt.show()
 
 
 def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, fun):
@@ -158,11 +169,10 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
             iterrator = iterrator + 1
 
     results.append(results_table.copy())
-    if amount_of_var == 2:
+    if amount_of_var == 8:
         the_best_point_x.append(results_table[0].X[0])
         the_best_point_y.append(results_table[0].X[1])
         draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y)
-
 
     return results
     # for i in range(4):

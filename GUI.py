@@ -4,12 +4,9 @@ from tkinter import *
 import GUI2
 from main import main_start
 from tkinter import messagebox
-# from GUI2 import start_calculations
 
 
-
-
-def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B,root):
+def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B, root):
     # try:
     fun = analize(function_filed)
     minimum_tab = extremum_analize(x_min_filed + "\n")
@@ -21,9 +18,10 @@ def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HM
                              minimum_tab,
                              fun)
         root.destroy()
-        GUI2.start_calculations(results, int(amount_var), int(iterrations), function_filed, x_min_filed, x_max_filed, HMS,
-                           HMCR,
-                           PAR, B, int(100))
+        GUI2.start_calculations(results, int(amount_var), int(iterrations), function_filed, x_min_filed,
+                                x_max_filed, HMS,
+                                HMCR,
+                                PAR, B, int(100))
 
 
 # except:
@@ -94,17 +92,29 @@ def check_B(min_tab, max_tab, B):
 
 def analize(fun):
     fun = fun.lower()
-    list_try = ["sin", "cos", "tg", "ctg"]
+    list_try = ["sin", "cos", "tan", "exp"]
     index = []
 
     for x in list_try:
         if x in fun:
-            index.append(fun.find(x))
+            cout = fun.count(x)
+            temp_c = 0
+            start = 0
+            while temp_c < cout:
+                tmep_index = fun.find(x, start)
+                index.append(tmep_index)
+                start = start + tmep_index + 1
+                temp_c = temp_c + 1
+
+    index = sorted(index)
+    print(index)
     fun = add_math_world(fun, index)
+    print("WYYNIK TO ", fun)
     return fun
 
 
-def clear():
+def clear(fun_filed, X_min_filed, X_max_filed, amount_var_filed, HMS_filed, HMCR_filed, PAR_filed, iterrations_filed,
+          b_f):
     fun_filed.delete(0, END)
     X_min_filed.delete(0, END)
     X_max_filed.delete(0, END)
@@ -113,7 +123,7 @@ def clear():
     HMCR_filed.delete(0, END)
     PAR_filed.delete(0, END)
     iterrations_filed.delete(0, END)
-    B_filed.delete(0, END)
+    b_f.delete(0, END)
 
 
 def extremum_analize(extrema_str):
@@ -131,12 +141,13 @@ def extremum_analize(extrema_str):
 
 
 def add_math_world(str, indexes):
+    world = "math."
+    sum = 0
     for i in indexes:
-        str1 = str[0:i]
-        print(str1)
-        str2 = "math." + str[i:]
-        print(str2)
+        str1 = str[0:i + sum]
+        str2 = world + str[i + sum:]
         str = str1 + str2
+        sum = sum + len(world)
     return str
 
 
@@ -163,9 +174,11 @@ def main(fun_f, x_min_f, x_max_f, amount_f, hms_f, hmcr_f, par_f, iter_f, b_f):
     start_button = Button(frame_controler, text="Start", padx=5, pady=5,
                           command=lambda: start_program(fun_filed.get(), X_min_filed.get(), X_max_filed.get(),
                                                         amount_var_filed.get(), HMCR_filed.get(), HMS_filed.get(),
-                                                        PAR_filed.get(), iterrations_filed.get(), B_filed.get(),root))
+                                                        PAR_filed.get(), iterrations_filed.get(), B_filed.get(), root))
 
-    clear_button = Button(frame_controler, text="Clear", padx=5, pady=5, command=clear)
+    clear_button = Button(frame_controler, text="Clear", padx=5, pady=5,
+                          command=lambda: clear(fun_filed, X_min_filed, X_max_filed, amount_var_filed, HMS_filed,
+                                                HMCR_filed, PAR_filed, iterrations_filed, B_filed))
     fx_text = Label(frame_input, text="F(X) = ")
     xmin_text = Label(frame_input, text="Xmin =")
     xmax_text = Label(frame_input, text="Xmax =")

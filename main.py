@@ -12,7 +12,6 @@ class Result:
 
 
 def Fx(X, function):
-
     for i in range(len(X)):
         temp_str = "x" + str(i + 1)
         exec("%s = %f" % (temp_str, X[i]))
@@ -89,11 +88,11 @@ def draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y):
     print(the_best_point_x)
 
     if len(X_var) == 2:
-        X_l = np.arange(X_min[0], X_max[0], 0.1)
-        Y_l = np.arange(X_min[1], X_max[1], 0.1)
-        x1, x2 = np.meshgrid(X_l, Y_l)
+        Xl = np.arange(X_min[0], X_max[0], 0.1)
+        Yl = np.arange(X_min[1], X_max[1], 0.1)
+        x1, x2 = np.meshgrid(Xl, Yl)
+        fun = fun.replace("math", "np")
         Z = eval(fun)
-
         # for i in range(len(the_best_point_x)):
         #     plt.annotate("Iter "+str((i+1)*10)+"%", (the_best_point_x[i], the_best_point_y[i]), c="red")
 
@@ -169,20 +168,9 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
             iterrator = iterrator + 1
 
     results.append(results_table.copy())
-    if amount_of_var == 8:
+    if amount_of_var == 2:
         the_best_point_x.append(results_table[0].X[0])
         the_best_point_y.append(results_table[0].X[1])
         draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y)
 
     return results
-    # for i in range(4):
-    #     print()
-    #
-    # print("Wynik calosci")
-    # iter = 0
-    # for r in results:
-    #     print()
-    #     print("Dla ", (iter + 1) * graph_step)
-    #     # print(r)
-    #     show_table(r, amount_of_var)
-    #     iter = iter + 1

@@ -7,25 +7,25 @@ from tkinter import messagebox
 
 
 def start_program(function_filed, x_min_filed, x_max_filed, amount_var, HMCR, HMS, PAR, iterrations, B, root):
-    # try:
-    fun = analize(function_filed)
-    minimum_tab = extremum_analize(x_min_filed + "\n")
-    maximum_tab = extremum_analize(x_max_filed + "\n")
-    isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B, minimum_tab, maximum_tab)
-    if isOK:
-        results = main_start(int(HMS), float(HMCR), float(PAR), float(B), int(amount_var), int(iterrations),
-                             maximum_tab,
-                             minimum_tab,
-                             fun)
-        root.destroy()
-        GUI2.start_calculations(results, int(amount_var), int(iterrations), function_filed, x_min_filed,
-                                x_max_filed, HMS,
-                                HMCR,
-                                PAR, B, int(100))
+    try:
+        fun = analize(function_filed)
+        minimum_tab = extremum_analize(x_min_filed + "\n")
+        maximum_tab = extremum_analize(x_max_filed + "\n")
+        isOK = check_data(amount_var, HMCR, HMS, PAR, iterrations, B, minimum_tab, maximum_tab)
+        if isOK:
+            results = main_start(int(HMS), float(HMCR), float(PAR), float(B), int(amount_var), int(iterrations),
+                                 maximum_tab,
+                                 minimum_tab,
+                                 fun)
+            root.destroy()
+            GUI2.start_calculations(results, int(amount_var), int(iterrations), function_filed, x_min_filed,
+                                    x_max_filed, HMS,
+                                    HMCR,
+                                    PAR, B, int(100))
 
 
-# except:
-#     messagebox.showwarning("Błąd", "Wystąpił nieoczekiwany błąd. Proszę sprawdź wszystkie dane")
+    except:
+        messagebox.showwarning("Błąd", "Wystąpił nieoczekiwany błąd. Proszę sprawdź wszystkie dane")
 
 
 def check_data(amount_var, HMCR, HMS, PAR, iterrations, B, min_tab, max_tab):
@@ -176,17 +176,17 @@ def main(fun_f, x_min_f, x_max_f, amount_f, hms_f, hmcr_f, par_f, iter_f, b_f):
                                                         amount_var_filed.get(), HMCR_filed.get(), HMS_filed.get(),
                                                         PAR_filed.get(), iterrations_filed.get(), B_filed.get(), root))
 
-    clear_button = Button(frame_controler, text="Clear", padx=5, pady=5,
+    clear_button = Button(frame_controler, text="Wyczyść", padx=5, pady=5,
                           command=lambda: clear(fun_filed, X_min_filed, X_max_filed, amount_var_filed, HMS_filed,
                                                 HMCR_filed, PAR_filed, iterrations_filed, B_filed))
     fx_text = Label(frame_input, text="F(X) = ")
     xmin_text = Label(frame_input, text="Xmin =")
     xmax_text = Label(frame_input, text="Xmax =")
-    amount_var_text = Label(frame_data, text="Amount of\n Variable = ")
+    amount_var_text = Label(frame_data, text="Ilość zmiennych = ")
     HMS_text = Label(frame_data, text="HMS=")
     HMCR_text = Label(frame_data, text="HMCR=")
     PAR_text = Label(frame_data, text="PAR=")
-    iter_text = Label(frame_data, text="Iterations=")
+    iter_text = Label(frame_data, text="Iterracje=")
     B_text = Label(frame_data, text="B=")
 
     frame_input.grid(column=0, row=0)

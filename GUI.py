@@ -1,6 +1,6 @@
 import math
 from tkinter import *
-
+import threading
 import GUI2
 from main import main_start
 from tkinter import messagebox

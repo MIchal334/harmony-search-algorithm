@@ -2,7 +2,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-
+import threading
 
 class Result:
 
@@ -171,6 +171,8 @@ def main_start(HMS, HMCR, PAR, b, amount_of_var, amount_of_step, X_max, X_min, f
     if amount_of_var == 2:
         the_best_point_x.append(results_table[0].X[0])
         the_best_point_y.append(results_table[0].X[1])
-        draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y)
+        th = threading.Thread(target=lambda: draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y))
+        th.start()
+
 
     return results

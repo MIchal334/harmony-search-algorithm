@@ -106,7 +106,9 @@ def draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y):
             plt.arrow(x=xi, y=yi,
                       dx=dx, dy=dy, width=.02)
 
-    plt.imshow(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1,
+    # plt.imshow(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1,
+    #                       max(the_best_point_y) + 1])
+    plt.contourf(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1,
                           max(the_best_point_y) + 1])
     plt.colorbar()
     plt.show()

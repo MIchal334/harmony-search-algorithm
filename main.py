@@ -103,8 +103,9 @@ def draw(X_max, X_min, fun, X_var, the_best_point_x, the_best_point_y):
             yii = the_best_point_y[i + 1]
             dx = xii - xi
             dy = yii - yi
-            plt.arrow(x=xi, y=yi,
-                      dx=dx, dy=dy, width=.02)
+            # plt.arrow(x=xi, y=yi,
+            #           dx=dx, dy=dy, width=.02)
+            plt.annotate("", xy=(xii, yii), xytext=(xi, yi), arrowprops=dict(arrowstyle="->"))
 
     # plt.imshow(Z, extent=[min(the_best_point_x) - 1, max(the_best_point_x) + 1, min(the_best_point_y) - 1,
     #                       max(the_best_point_y) + 1])
